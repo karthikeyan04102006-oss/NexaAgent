@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { 
   Sparkles, 
@@ -10,26 +10,75 @@ import {
   ShieldCheck, 
   Zap, 
   CheckCircle2, 
-  Bot, 
   Calendar, 
   Mail, 
   MapPin, 
   Plane, 
   Database,
   Globe,
-  ChevronRight,
   Play,
   Lock,
-  Workflow
+  Workflow,
+  Search,
+  Activity,
+  BarChart3,
+  RotateCcw,
+  Brain,
+  CheckSquare,
+  Building2,
+  UserCheck
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { HeroAgentVisualizer } from '@/components/agent/HeroAgentVisualizer';
 
 export default function LandingPage() {
-  const [activeTab, setActiveTab] = useState<'graph' | 'architecture'>('graph');
+  const steps = [
+    { num: '01', title: 'UNDERSTAND', desc: 'AI analyzes and understands the user goal prompt and constraints.' },
+    { num: '02', title: 'PLAN', desc: 'The agent breaks the goal into structured, executable sub-tasks.' },
+    { num: '03', title: 'ACT', desc: 'The agent selects and executes appropriate API tools safely.' },
+    { num: '04', title: 'VERIFY', desc: 'The agent verifies action results against initial goals.' },
+    { num: '05', title: 'COMPLETE', desc: 'The agent reports the final verified outcome to the user.' }
+  ];
+
+  const features = [
+    { title: 'Autonomous Planning', desc: 'Decomposes complex prompts into ordered multi-step execution graphs.', icon: Layers },
+    { title: 'Tool Calling', desc: 'Seamlessly interacts with Google Calendar, Gmail, Maps, and Travel APIs.', icon: WrenchIcon },
+    { title: 'Multi-Step Execution', desc: 'Executes chained workflows with conditional branching and retries.', icon: Workflow },
+    { title: 'Real-Time Activity', desc: 'Live event stream showing sanitized step execution summaries.', icon: Activity },
+    { title: 'Human Approval', desc: 'Enforces human authorization for sensitive financial & email actions.', icon: ShieldCheck },
+    { title: 'Failure Recovery', desc: 'Automatically replans when an API call fails or encounters errors.', icon: RotateCcw },
+    { title: 'Workflow Automation', desc: 'Build re-usable scheduled or triggered visual node workflows.', icon: Zap },
+    { title: 'Memory & State', desc: 'Remains context-aware across long-running task executions.', icon: Brain },
+    { title: 'Integrations', desc: 'Pluggable API framework with RBAC permission scope controls.', icon: Globe },
+    { title: 'Analytics', desc: 'Enterprise dashboards tracking task success rates & API token usage.', icon: BarChart3 }
+  ];
+
+  function WrenchIcon(props: any) {
+    return <Cpu {...props} />;
+  }
+
+  const useCases = [
+    { title: 'Personal Productivity', desc: 'Schedule meetings, organize calendars and manage tasks.', prompt: '"Organize my calendar for tomorrow"' },
+    { title: 'Travel Planning', desc: 'Research transport, hotels and create itineraries.', prompt: '"Plan my Chennai trip under ₹15,000"' },
+    { title: 'Email Automation', desc: 'Read, organize, draft and send emails with approval.', prompt: '"Draft team sync invitations"' },
+    { title: 'Business Workflows', desc: 'Automate repetitive multi-step business processes.', prompt: '"Weekly executive briefing scheduler"' },
+    { title: 'Research & Synthesis', desc: 'Collect information, compare results and produce structured outputs.', prompt: '"Research Q3 SaaS benchmarks"' }
+  ];
+
+  const integrationsList = [
+    { name: 'Google Calendar', status: 'Connected', icon: Calendar, color: 'text-blue-400' },
+    { name: 'Gmail API', status: 'Connected', icon: Mail, color: 'text-red-400' },
+    { name: 'Google Maps', status: 'Connected', icon: MapPin, color: 'text-emerald-400' },
+    { name: 'Travel APIs', status: 'Connected', icon: Plane, color: 'text-purple-400' },
+    { name: 'Supabase DB', status: 'Connected', icon: Database, color: 'text-amber-400' },
+    { name: 'Gemini 1.5 Pro', status: 'Connected', icon: Sparkles, color: 'text-rose-400' },
+    { name: 'Slack Integration', status: 'Available', icon: Globe, color: 'text-zinc-400' },
+    { name: 'Notion Connector', status: 'Coming Soon', icon: Brain, color: 'text-zinc-500' }
+  ];
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-red-900 selection:text-white">
-      {/* Header Navigation */}
+      {/* NAVBAR */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-zinc-800/80">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
@@ -50,10 +99,10 @@ export default function LandingPage() {
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-300">
             <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
-            <a href="#capabilities" className="hover:text-white transition-colors">Capabilities</a>
+            <a href="#features" className="hover:text-white transition-colors">Features</a>
+            <a href="#use-cases" className="hover:text-white transition-colors">Use Cases</a>
             <a href="#integrations" className="hover:text-white transition-colors">Integrations</a>
-            <a href="#architecture" className="hover:text-white transition-colors">Architecture</a>
-            <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
+            <a href="#security" className="hover:text-white transition-colors">Security</a>
           </nav>
 
           <div className="flex items-center gap-4">
@@ -62,7 +111,7 @@ export default function LandingPage() {
             </Link>
             <Link href="/onboarding">
               <Button variant="primary" size="sm" icon={<ArrowRight className="w-4 h-4" />}>
-                Launch NexaAgent
+                Get Started
               </Button>
             </Link>
           </div>
@@ -71,7 +120,6 @@ export default function LandingPage() {
 
       {/* HERO SECTION */}
       <section className="pt-36 pb-20 px-6 relative overflow-hidden">
-        {/* Glow backdrop effects */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-700/15 rounded-full blur-[140px] pointer-events-none"></div>
 
         <div className="max-w-5xl mx-auto text-center space-y-8 relative z-10">
@@ -91,16 +139,16 @@ export default function LandingPage() {
             NexaAgent transforms natural-language goals into autonomous workflows that plan, execute, verify, and complete tasks across your everyday apps.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link href="/dashboard" className="w-full sm:w-auto">
               <Button size="lg" className="w-full sm:w-auto text-base font-semibold" icon={<Sparkles className="w-5 h-5" />}>
-                Start Building Free
+                Start Building
               </Button>
             </Link>
 
             <Link href="/agent" className="w-full sm:w-auto">
               <Button size="lg" variant="secondary" className="w-full sm:w-auto text-base" icon={<Play className="w-4 h-4 text-red-500" />}>
-                View Live Agent Demo
+                View Demo
               </Button>
             </Link>
           </div>
@@ -110,58 +158,9 @@ export default function LandingPage() {
             "Your goal. Our agents. Your results."
           </div>
 
-          {/* HERO VISUAL: FUTURISTIC AGENT EXECUTION DASHBOARD PREVIEW */}
-          <div className="pt-12">
-            <div className="relative mx-auto rounded-2xl border border-zinc-800 bg-zinc-950/90 p-4 shadow-red-glow-lg overflow-hidden group">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-rose-500 to-red-600"></div>
-
-              {/* Dashboard Preview Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-zinc-800 text-xs font-mono text-zinc-400">
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-red-500/80"></span>
-                  <span className="w-3 h-3 rounded-full bg-amber-500/80"></span>
-                  <span className="w-3 h-3 rounded-full bg-emerald-500/80"></span>
-                  <span className="ml-2 font-bold text-white">NexaAgent Command Center</span>
-                </div>
-                <span className="bg-zinc-900 px-3 py-1 rounded border border-zinc-800 text-red-400">
-                  STATUS: AUTONOMOUS EXECUTION ACTIVE
-                </span>
-              </div>
-
-              {/* Live Simulated Goal Execution Pipeline */}
-              <div className="p-6 text-left space-y-6">
-                <div className="bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl flex items-center justify-between">
-                  <div>
-                    <span className="text-[10px] font-mono text-red-400 uppercase tracking-wider">User Goal Prompt</span>
-                    <div className="text-base font-bold text-white mt-0.5">
-                      "Plan my Chennai trip under ₹15,000 including train booking & calendar sync."
-                    </div>
-                  </div>
-                  <span className="px-3 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 text-xs font-semibold">
-                    Completed (9/9 Steps)
-                  </span>
-                </div>
-
-                {/* Execution Graph Visual Row */}
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-                  {[
-                    { title: '1. Goal Understand', tool: 'Supabase', status: 'Completed' },
-                    { title: '2. Search Transport', tool: 'Travel Engine', status: 'Completed' },
-                    { title: '3. Compare Hotels', tool: 'Google Maps', status: 'Completed' },
-                    { title: '4. Add to Calendar', tool: 'Google Calendar', status: 'Completed' },
-                    { title: '5. Verify & Report', tool: 'Nexa Engine', status: 'Completed' }
-                  ].map((step, idx) => (
-                    <div key={idx} className="p-3 bg-zinc-900 border border-zinc-800 rounded-xl space-y-1">
-                      <div className="text-xs font-bold text-zinc-200">{step.title}</div>
-                      <div className="text-[10px] font-mono text-zinc-400">Tool: {step.tool}</div>
-                      <div className="text-[10px] text-emerald-400 flex items-center gap-1 font-semibold pt-1">
-                        <CheckCircle2 className="w-3 h-3" /> {step.status}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+          {/* HERO INTERACTIVE AGENT VISUALIZER */}
+          <div className="pt-8">
+            <HeroAgentVisualizer />
           </div>
         </div>
       </section>
@@ -174,88 +173,194 @@ export default function LandingPage() {
               How NexaAgent Operates
             </h2>
             <p className="text-zinc-400 max-w-2xl mx-auto text-sm md:text-base">
-              Unlike simple conversational chatbots, NexaAgent executes complex goals through structured multi-phase orchestration.
+              A 5-step autonomous execution model designed for reliability and governance.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 hover:border-red-600/50 transition-all space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-red-950 text-red-400 border border-red-800 flex items-center justify-center font-bold text-lg">
-                01
-              </div>
-              <h3 className="text-xl font-bold text-white">1. Goal Parsing & Planning</h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                Gemini 1.5 Pro analyzes your high-level natural language prompt, validates constraints, and decomposes it into sequential sub-tasks.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 hover:border-red-600/50 transition-all space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-red-950 text-red-400 border border-red-800 flex items-center justify-center font-bold text-lg">
-                02
-              </div>
-              <h3 className="text-xl font-bold text-white">2. Tool Selection & Execution</h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                The agent dynamically selects connected APIs (Google Calendar, Gmail, Google Maps, Travel APIs) and executes actions safely.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 hover:border-red-600/50 transition-all space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-red-950 text-red-400 border border-red-800 flex items-center justify-center font-bold text-lg">
-                03
-              </div>
-              <h3 className="text-xl font-bold text-white">3. Human Approval & Verification</h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                Sensitive actions (email dispatches, financial payments) trigger Human-in-the-Loop authorization before final verification.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CAPABILITIES & INTEGRATIONS */}
-      <section id="capabilities" className="py-20 px-6 border-t border-zinc-900">
-        <div className="max-w-6xl mx-auto space-y-12">
-          <div className="text-center space-y-4">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
-              Pluggable Integration Architecture
-            </h2>
-            <p className="text-zinc-400 max-w-2xl mx-auto text-sm">
-              Connect your everyday tools seamlessly with role-based security controls.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {[
-              { name: 'Google Calendar', icon: Calendar, color: 'text-blue-400' },
-              { name: 'Gmail API', icon: Mail, color: 'text-red-400' },
-              { name: 'Google Maps', icon: MapPin, color: 'text-emerald-400' },
-              { name: 'Travel APIs', icon: Plane, color: 'text-purple-400' },
-              { name: 'Supabase DB', icon: Database, color: 'text-amber-400' },
-              { name: 'Gemini AI', icon: Sparkles, color: 'text-rose-400' },
-            ].map((item, i) => (
-              <div key={i} className="p-4 bg-zinc-950 border border-zinc-800 rounded-xl text-center space-y-2 hover:border-zinc-700">
-                <item.icon className={`w-6 h-6 mx-auto ${item.color}`} />
-                <div className="text-xs font-semibold text-white">{item.name}</div>
-                <div className="text-[10px] text-emerald-400 font-mono">Connected</div>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            {steps.map(s => (
+              <div key={s.num} className="p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800 hover:border-red-600/50 transition-all space-y-3">
+                <div className="text-2xl font-extrabold text-red-500 font-mono">{s.num}</div>
+                <h3 className="text-base font-bold text-white tracking-wide">{s.title}</h3>
+                <p className="text-xs text-zinc-400 leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="py-12 border-t border-zinc-900 bg-zinc-950 text-zinc-500 text-xs">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <Sparkles className="w-4 h-4 text-red-500" />
-            <span className="font-bold text-white">NexaAgent</span>
-            <span>© 2026 Nexa Technologies Inc. All rights reserved.</span>
+      {/* FEATURES SECTION */}
+      <section id="features" className="py-20 px-6 border-t border-zinc-900">
+        <div className="max-w-6xl mx-auto space-y-12">
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+              Enterprise Agent Capabilities
+            </h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto text-sm">
+              Built with security, tool calling, and human governance at the core.
+            </p>
           </div>
 
-          <div className="flex items-center gap-6">
-            <Link href="/login" className="hover:text-white">Sign In</Link>
-            <Link href="/register" className="hover:text-white">Register</Link>
-            <Link href="/dashboard" className="hover:text-white">Dashboard</Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            {features.map((f, i) => {
+              const Icon = f.icon;
+              return (
+                <div key={i} className="p-5 bg-zinc-950 border border-zinc-800 hover:border-red-600/50 rounded-2xl space-y-3 hover:-translate-y-1 transition-all">
+                  <div className="p-2.5 bg-red-950/60 rounded-xl border border-red-800/60 text-red-400 w-fit">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-sm font-bold text-white">{f.title}</h3>
+                  <p className="text-xs text-zinc-400 leading-relaxed">{f.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* USE CASES SECTION */}
+      <section id="use-cases" className="py-20 px-6 border-t border-zinc-900 bg-zinc-950/40">
+        <div className="max-w-6xl mx-auto space-y-12">
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+              Autonomous Use Cases
+            </h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto text-sm">
+              From everyday personal productivity to complex business workflows.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {useCases.map((uc, i) => (
+              <div key={i} className="p-5 bg-zinc-900/80 border border-zinc-800 rounded-2xl space-y-3 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <h3 className="text-sm font-bold text-white">{uc.title}</h3>
+                  <p className="text-xs text-zinc-400">{uc.desc}</p>
+                </div>
+                <div className="p-2 rounded bg-zinc-950 text-[10px] font-mono text-red-400 border border-zinc-800 truncate">
+                  {uc.prompt}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* INTEGRATIONS SECTION */}
+      <section id="integrations" className="py-20 px-6 border-t border-zinc-900">
+        <div className="max-w-6xl mx-auto space-y-12">
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+              Connected API Ecosystem
+            </h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto text-sm">
+              Pluggable integrations with real status indicators.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {integrationsList.map((item, i) => (
+              <div key={i} className="p-5 bg-zinc-950 border border-zinc-800 rounded-2xl space-y-3 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <item.icon className={`w-6 h-6 ${item.color}`} />
+                  <span className="text-xs font-bold text-white">{item.name}</span>
+                </div>
+                <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
+                  item.status === 'Connected' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
+                  item.status === 'Available' ? 'bg-blue-950 text-blue-300 border border-blue-800' :
+                  'bg-zinc-900 text-zinc-500 border border-zinc-800'
+                }`}>
+                  {item.status}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECURITY SECTION */}
+      <section id="security" className="py-20 px-6 border-t border-zinc-900 bg-zinc-950/80">
+        <div className="max-w-5xl mx-auto text-center space-y-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950 text-red-400 border border-red-800 text-xs font-semibold">
+            <ShieldCheck className="w-4 h-4" /> Responsible Autonomy
+          </div>
+
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+            Built for responsible autonomy.
+          </h2>
+
+          <p className="text-zinc-400 max-w-2xl mx-auto text-sm leading-relaxed">
+            Sensitive operations like dispatches, bookings, and deletions automatically pause execution to request explicit Human-in-the-Loop approval.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 text-xs font-semibold text-zinc-300">
+            <div className="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">Authentication</div>
+            <div className="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">Row Level Security</div>
+            <div className="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">Human Approval Hold</div>
+            <div className="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">Server Secrets Protection</div>
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA SECTION */}
+      <section className="py-20 px-6 border-t border-zinc-900 relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+            Turn your goals into completed work.
+          </h2>
+          <p className="text-zinc-400 text-base">
+            Build autonomous workflows with NexaAgent today.
+          </p>
+          <div className="flex justify-center gap-4 pt-2">
+            <Link href="/onboarding">
+              <Button size="lg" className="font-bold">Start Building</Button>
+            </Link>
+            <Link href="/agent">
+              <Button size="lg" variant="secondary">View Demo</Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="py-12 border-t border-zinc-900 bg-zinc-950 text-zinc-500 text-xs">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 font-bold text-white text-base">
+              <Sparkles className="w-4 h-4 text-red-500" /> NexaAgent
+            </div>
+            <p className="text-zinc-400 text-[11px]">"Your goal. Our agents. Your results."</p>
+            <p className="text-[10px] text-zinc-600">© 2026 Nexa Technologies Inc.</p>
+          </div>
+
+          <div>
+            <div className="font-bold text-white mb-2">Product</div>
+            <ul className="space-y-1">
+              <li><Link href="/dashboard" className="hover:text-white">Dashboard</Link></li>
+              <li><Link href="/agent" className="hover:text-white">Agent Command Center</Link></li>
+              <li><Link href="/workflows" className="hover:text-white">Workflows</Link></li>
+              <li><Link href="/integrations" className="hover:text-white">Integrations</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <div className="font-bold text-white mb-2">Company</div>
+            <ul className="space-y-1">
+              <li><a href="#how-it-works" className="hover:text-white">How It Works</a></li>
+              <li><a href="#security" className="hover:text-white">Security & Governance</a></li>
+              <li><Link href="/client" className="hover:text-white">Enterprise Tier</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <div className="font-bold text-white mb-2">Legal</div>
+            <ul className="space-y-1">
+              <li><span className="text-zinc-500">Privacy Policy</span></li>
+              <li><span className="text-zinc-500">Terms of Service</span></li>
+              <li><span className="text-zinc-500">Row Level Security</span></li>
+            </ul>
           </div>
         </div>
       </footer>

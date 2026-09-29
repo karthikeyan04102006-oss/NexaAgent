@@ -32,13 +32,13 @@ export default function AgentCommandCenterPage() {
       title: 'Plan Chennai Trip',
       prompt: 'Plan my Chennai trip under ₹15,000 including train booking, hotel, and calendar sync.',
       icon: Plane,
-      tag: 'Travel & Financial Demo'
+      tag: 'DEMO DATA'
     },
     {
       title: 'Schedule Team Sync',
       prompt: 'Schedule a meeting with my team tomorrow afternoon and notify attendees.',
       icon: Calendar,
-      tag: 'Calendar & Gmail Demo'
+      tag: 'DEMO DATA'
     }
   ];
 
