@@ -146,9 +146,9 @@ export default function LandingPage() {
               </Button>
             </Link>
 
-            <Link href="/agent" className="w-full sm:w-auto">
-              <Button size="lg" variant="secondary" className="w-full sm:w-auto text-base" icon={<Play className="w-4 h-4 text-red-500" />}>
-                View Demo
+            <Link href="/login" className="w-full sm:w-auto">
+              <Button size="lg" variant="secondary" className="w-full sm:w-auto text-base">
+                Sign In
               </Button>
             </Link>
           </div>
@@ -314,11 +314,11 @@ export default function LandingPage() {
             Build autonomous workflows with NexaAgent today.
           </p>
           <div className="flex justify-center gap-4 pt-2">
-            <Link href="/onboarding">
+            <Link href="/register">
               <Button size="lg" className="font-bold">Start Building</Button>
             </Link>
-            <Link href="/agent">
-              <Button size="lg" variant="secondary">View Demo</Button>
+            <Link href="/login">
+              <Button size="lg" variant="secondary">Sign In</Button>
             </Link>
           </div>
         </div>

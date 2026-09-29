@@ -21,9 +21,9 @@ export const Button: React.FC<ButtonProps> = ({
 
   const variants = {
     primary: "bg-red-gradient text-white shadow-red-glow hover:shadow-red-glow-lg border border-red-500/40 hover:border-red-400 active:scale-[0.98]",
-    secondary: "bg-zinc-900 text-zinc-100 border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700 active:scale-[0.98]",
-    outline: "border border-zinc-800 text-zinc-300 hover:border-red-600/60 hover:text-white hover:bg-zinc-900/50",
-    ghost: "text-zinc-400 hover:text-white hover:bg-zinc-900/60",
+    secondary: "bg-zinc-200 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-800 active:scale-[0.98]",
+    outline: "border border-zinc-300 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-red-600/60 hover:text-red-600 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900/50",
+    ghost: "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/60 dark:hover:bg-zinc-900/60",
     danger: "bg-rose-950 text-rose-200 border border-rose-800/80 hover:bg-rose-900 active:scale-[0.98]"
   };
 

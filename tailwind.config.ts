@@ -10,18 +10,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#000000",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
         surface: {
-          DEFAULT: "#0a0a0c",
-          elevated: "#121216",
-          border: "#1f1f26",
-          hover: "#181820"
+          DEFAULT: "var(--card)",
+          elevated: "var(--card)",
+          border: "var(--card-border)",
         },
         nexa: {
           darkred: "#830000",
           crimson: "#BC0202",
           red: "#FF0000",
-          glow: "rgba(188, 2, 2, 0.3)",
+          glow: "rgba(188, 2, 2, 0.25)",
           accent: "#ff2a2a"
         }
       },
@@ -31,28 +31,11 @@ const config: Config = {
       },
       backgroundImage: {
         "red-gradient": "linear-gradient(135deg, #830000 0%, #BC0202 50%, #FF0000 100%)",
-        "red-dark-gradient": "linear-gradient(180deg, rgba(131, 0, 0, 0.25) 0%, rgba(10, 10, 12, 0) 100%)",
-        "glass-gradient": "linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%)",
       },
       boxShadow: {
-        'red-glow': '0 0 20px -3px rgba(188, 2, 2, 0.4)',
-        'red-glow-lg': '0 0 35px -5px rgba(255, 0, 0, 0.5)',
-        'subtle': '0 4px 20px 0 rgba(0, 0, 0, 0.5)',
-      },
-      animation: {
-        'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'glow-pulse': 'glowPulse 2s ease-in-out infinite alternate',
-        'execution-flow': 'flowLine 1.5s linear infinite',
-      },
-      keyframes: {
-        glowPulse: {
-          '0%': { boxShadow: '0 0 10px rgba(188, 2, 2, 0.2)' },
-          '100%': { boxShadow: '0 0 25px rgba(255, 0, 0, 0.6)' },
-        },
-        flowLine: {
-          '0%': { backgroundPosition: '0% 0%' },
-          '100%': { backgroundPosition: '100% 0%' },
-        }
+        'red-glow': '0 0 20px -3px rgba(188, 2, 2, 0.3)',
+        'red-glow-lg': '0 0 35px -5px rgba(255, 0, 0, 0.4)',
+        'subtle': '0 2px 10px 0 rgba(0, 0, 0, 0.05)',
       }
     },
   },

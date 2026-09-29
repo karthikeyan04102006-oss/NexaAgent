@@ -16,12 +16,12 @@ export const Card: React.FC<CardProps> = ({
   const base = "rounded-xl border transition-all duration-200 overflow-hidden";
 
   const variants = {
-    default: "bg-surface-elevated/90 border-surface-border text-zinc-100 shadow-subtle",
-    glow: "bg-surface-elevated/95 border-nexa-crimson/30 shadow-red-glow text-zinc-100",
-    glass: "bg-zinc-950/60 backdrop-blur-xl border-zinc-800/80 text-zinc-100"
+    default: "bg-surface border-surface-border text-foreground shadow-subtle",
+    glow: "bg-surface border-nexa-crimson/40 shadow-red-glow text-foreground",
+    glass: "bg-surface/90 backdrop-blur-xl border-surface-border text-foreground"
   };
 
-  const hover = hoverEffect ? "hover:border-nexa-crimson/50 hover:shadow-red-glow hover:-translate-y-0.5" : "";
+  const hover = hoverEffect ? "hover:border-nexa-crimson/60 hover:shadow-red-glow hover:-translate-y-0.5" : "";
 
   return (
     <div className={`${base} ${variants[variant]} ${hover} ${className}`} {...props}>
