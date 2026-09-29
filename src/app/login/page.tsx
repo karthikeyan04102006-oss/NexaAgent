@@ -13,10 +13,21 @@ export default function LoginPage() {
   const [email, setEmail] = useState<string>('alex.vance@enterprise-nexa.io');
   const [password, setPassword] = useState<string>('password123');
 
+  const [errorMsg, setErrorMsg] = useState<string>('');
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login(email);
-    router.push('/dashboard');
+    setErrorMsg('');
+    if (password.length < 6) {
+      setErrorMsg('Invalid password. Password must be at least 6 characters.');
+      return;
+    }
+    try {
+      await login(email);
+      router.push('/dashboard');
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Invalid email or password.');
+    }
   };
 
   const handleGoogleSignIn = async () => {
@@ -46,6 +57,12 @@ export default function LoginPage() {
           </h2>
           <p className="text-xs text-zinc-400">Sign in to access your autonomous AI command center</p>
         </div>
+
+        {errorMsg && (
+          <div className="p-3 bg-red-950/80 border border-red-800 rounded-xl text-xs text-red-300 text-center font-medium">
+            {errorMsg}
+          </div>
+        )}
 
         {/* Login Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
