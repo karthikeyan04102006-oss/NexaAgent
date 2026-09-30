@@ -6,7 +6,7 @@ import { useAgent } from '@/context/AgentContext';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { ArrowLeft, Play, GitFork, Plus, Layers, ArrowRight, Settings } from 'lucide-react';
+import { ArrowLeft, Play, ArrowRight } from 'lucide-react';
 
 export default function WorkflowDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -16,58 +16,58 @@ export default function WorkflowDetailPage({ params }: { params: Promise<{ id: s
 
   return (
     <DashboardLayout>
-      <div className="space-y-6 max-w-6xl mx-auto">
+      <div className="space-y-8 max-w-5xl mx-auto">
         <div>
-          <Link href="/workflows" className="inline-flex items-center gap-2 text-xs text-zinc-400 hover:text-white transition-colors">
-            <ArrowLeft className="w-4 h-4" /> Back to Workflows List
+          <Link href="/workflows" className="inline-flex items-center gap-2 text-xs font-mono text-[#777777] hover:text-[#111111] dark:hover:text-white transition-colors">
+            <ArrowLeft className="w-3.5 h-3.5 text-[#830000]" /> BACK TO WORKFLOW BUILDER
           </Link>
         </div>
 
-        <Card variant="glow" className="p-6 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
+        <Card variant="glow" className="p-8 space-y-6">
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 border-b border-[#DAD8D2] dark:border-[#2D2B27] pb-6">
             <div>
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl font-extrabold text-white">{workflow.name}</h1>
-                <span className={`px-2.5 py-1 rounded text-xs font-mono font-bold uppercase border ${
-                  workflow.isActive ? 'bg-emerald-950 text-emerald-300 border-emerald-800' : 'bg-zinc-900 text-zinc-500'
+                <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#111111] dark:text-[#EAE8E3]">{workflow.name}</h1>
+                <span className={`px-2.5 py-0.5 rounded text-[10px] font-mono font-semibold uppercase tracking-wider border ${
+                  workflow.isActive ? 'bg-[#FAFAF7] dark:bg-[#181715] text-[#111111] dark:text-[#EAE8E3] border-[#DAD8D2]' : 'bg-[#F5F4F0] dark:bg-[#121210] text-[#777777] border-[#DAD8D2]'
                 }`}>
                   {workflow.isActive ? 'Active' : 'Paused'}
                 </span>
               </div>
-              <p className="text-xs text-zinc-400 mt-1">{workflow.description}</p>
+              <p className="text-xs text-[#555555] dark:text-[#A8A6A0] mt-1">{workflow.description}</p>
             </div>
 
-            <div className="flex items-center gap-3">
-              <Button variant="primary" icon={<Play className="w-4 h-4" />}>
+            <div className="flex items-center gap-3 shrink-0">
+              <Button variant="primary" icon={<Play className="w-3.5 h-3.5" />}>
                 Execute Workflow Test
               </Button>
             </div>
           </div>
 
-          <div className="bg-zinc-950/90 border border-zinc-800/90 rounded-2xl p-6 min-h-[360px] relative flex flex-col justify-center overflow-x-auto">
-            <div className="text-xs text-zinc-500 font-mono uppercase tracking-widest mb-6">
-              Interactive Node Canvas Editor
+          <div className="bg-[#FAFAF7] dark:bg-[#181715] border border-[#DAD8D2] dark:border-[#2D2B27] rounded-md p-8 min-h-[360px] relative flex flex-col justify-center overflow-x-auto">
+            <div className="text-[10px] font-mono text-[#777777] uppercase tracking-widest mb-6 font-semibold">
+              INTERACTIVE NODE CANVAS EDITOR
             </div>
 
-            <div className="flex items-center justify-between gap-3 min-w-[700px] overflow-x-auto py-4">
+            <div className="flex items-center justify-between gap-4 min-w-[650px] overflow-x-auto py-4">
               {workflow.nodes.map((node, i) => (
                 <React.Fragment key={node.id}>
-                  <div className="p-4 rounded-xl border max-w-[180px] w-full space-y-2 bg-zinc-900 border-zinc-800 hover:border-red-600/80 transition-all cursor-pointer">
-                    <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-red-400">
-                      {node.type} Node
+                  <div className="p-4 rounded-md border max-w-[170px] w-full space-y-2 bg-[#FFFFFF] dark:bg-[#1F1E1B] border-[#DAD8D2] dark:border-[#2D2B27] hover:border-[#111111] transition-all cursor-pointer shadow-subtle">
+                    <div className="text-[9px] font-mono uppercase tracking-widest font-semibold text-[#830000] dark:text-[#FF2A2A]">
+                      {node.type} NODE
                     </div>
-                    <div className="text-xs font-bold text-white leading-tight">
+                    <div className="text-xs font-semibold tracking-tight text-[#111111] dark:text-[#EAE8E3] leading-tight">
                       {node.title}
                     </div>
-                    <div className="text-[9px] font-mono text-zinc-500">
-                      Step #{i + 1}
+                    <div className="text-[9px] font-mono text-[#777777]">
+                      STEP 0{i + 1}
                     </div>
                   </div>
 
                   {i < workflow.nodes.length - 1 && (
                     <div className="flex items-center justify-center shrink-0">
-                      <div className="w-8 h-0.5 bg-gradient-to-r from-red-600 to-rose-400 relative">
-                        <ArrowRight className="w-4 h-4 text-red-500 absolute -right-2 -top-1.5" />
+                      <div className="w-10 h-px bg-[#830000] dark:bg-[#FF2A2A] relative">
+                        <ArrowRight className="w-3.5 h-3.5 text-[#830000] dark:text-[#FF2A2A] absolute -right-1.5 -top-1.5" />
                       </div>
                     </div>
                   )}
@@ -80,3 +80,4 @@ export default function WorkflowDetailPage({ params }: { params: Promise<{ id: s
     </DashboardLayout>
   );
 }
+

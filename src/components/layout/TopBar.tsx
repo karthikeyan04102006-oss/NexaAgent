@@ -4,8 +4,10 @@ import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useAgent } from '@/context/AgentContext';
 import { useTheme } from '@/context/ThemeContext';
-import { Search, Bell, HelpCircle, Shield, Sparkles, Sun, Moon, Laptop, ExternalLink } from 'lucide-react';
+import { Search, Bell, Shield, Sun, Moon, Laptop } from 'lucide-react';
 import Link from 'next/link';
+import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
+import { Button } from '@/components/ui/Button';
 
 export const TopBar: React.FC = () => {
   const { user } = useAuth();
@@ -22,82 +24,75 @@ export const TopBar: React.FC = () => {
   };
 
   return (
-    <header className="h-16 bg-surface/80 backdrop-blur-md border-b border-surface-border px-6 flex items-center justify-between sticky top-0 z-20">
+    <header className="h-16 bg-[#FAF9FC]/90 backdrop-blur-md border-b border-[#E7E3EC] px-8 flex items-center justify-between sticky top-0 z-20">
       {/* Search Bar */}
       <div className="relative max-w-md w-full">
-        <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+        <Search className="w-3.5 h-3.5 text-[#96919F] absolute left-3.5 top-1/2 -translate-y-1/2" />
         <input
           type="text"
-          placeholder="Search agent runs, tasks, tools, or workflows..."
-          className="w-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2 text-xs text-foreground placeholder-zinc-400 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
+          placeholder="Search agent goals, tasks, tools..."
+          className="w-full bg-[#FFFFFF] border border-[#E7E3EC] rounded-md pl-9 pr-4 py-1.5 text-xs text-[#17151C] placeholder-[#96919F] focus:outline-none focus:border-[#A78BFA] focus:ring-1 focus:ring-[#A78BFA] transition-all"
         />
       </div>
 
       {/* Right Controls */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         {/* Role Badge indicator */}
-        <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs text-foreground font-semibold">
-          <Shield className="w-3.5 h-3.5 text-red-600" />
-          <span className="capitalize">{user?.role?.replace('_', ' ') || 'User'}</span>
+        <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-[10px] bg-[#FAF9FC] dark:bg-[#111116] border border-[#E7E3EC] dark:border-[#23222B] text-[10px] font-mono tracking-widest uppercase text-[#696572] dark:text-[#A7A3B2] font-semibold">
+          <Shield className="w-3 h-3 text-[#A78BFA]" />
+          <span>{user?.role?.replace('_', ' ') || 'User'}</span>
         </div>
 
-        {/* Small Theme Switcher Icon */}
-        <button
-          onClick={toggleTheme}
-          title={`Current Theme: ${theme.toUpperCase()}. Click to switch.`}
-          className="p-2 text-zinc-600 dark:text-zinc-400 hover:text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-900 rounded-lg transition-colors"
-        >
-          {theme === 'light' ? (
-            <Sun className="w-4 h-4 text-amber-500" />
-          ) : theme === 'dark' ? (
-            <Moon className="w-4 h-4 text-blue-400" />
-          ) : (
-            <Laptop className="w-4 h-4 text-zinc-500" />
-          )}
-        </button>
+        {/* Professional Theme Switcher */}
+        <ThemeSwitcher />
 
         {/* Notifications Center Toggle & Popover */}
         <div className="relative">
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={() => setShowNotifs(!showNotifs)}
-            className="p-2 text-zinc-600 dark:text-zinc-400 hover:text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-900 rounded-lg transition-colors relative"
+            aria-label="Toggle notifications"
+            className="relative"
           >
             <Bell className="w-4 h-4" />
             {unreadCount > 0 && (
-              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+              <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-[#A78BFA] animate-ping"></span>
             )}
             {unreadCount > 0 && (
-              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-600"></span>
+              <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-[#A78BFA]"></span>
             )}
-          </button>
+          </Button>
 
           {/* Notifications Drawer */}
           {showNotifs && (
-            <div className="absolute right-0 mt-2 w-80 bg-surface border border-surface-border rounded-xl shadow-red-glow p-3 z-50 text-xs space-y-2 animate-in fade-in zoom-in-95 duration-150">
-              <div className="flex items-center justify-between border-b border-surface-border pb-2">
-                <span className="font-bold text-foreground flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-red-500" /> Notifications
+            <div className="absolute right-0 mt-2 w-80 bg-[#FFFFFF] border border-[#E7E3EC] rounded-lg shadow-editorial p-4 z-50 text-xs space-y-3">
+              <div className="flex items-center justify-between border-b border-[#E7E3EC] pb-2.5">
+                <span className="font-semibold text-[#17151C] uppercase tracking-wider text-[11px]">
+                  Notifications
                 </span>
-                <span className="text-[10px] text-zinc-400">{unreadCount} unread</span>
+                <span className="text-[10px] font-mono text-[#96919F]">{unreadCount} UNREAD</span>
               </div>
 
-              <div className="space-y-1.5 max-h-64 overflow-y-auto">
+              <div className="space-y-2 max-h-64 overflow-y-auto">
                 {notifications.length === 0 ? (
-                  <div className="text-center py-4 text-zinc-400">No notifications yet.</div>
+                  <div className="text-center py-4 text-[#96919F]">No activity notifications.</div>
                 ) : (
                   notifications.map(n => (
                     <div
                       key={n.id}
                       onClick={() => markNotificationAsRead(n.id)}
-                      className={`p-2.5 rounded-lg border transition-all cursor-pointer ${
-                        n.read ? 'bg-zinc-100 dark:bg-zinc-900/40 border-zinc-200 dark:border-zinc-800/40 text-zinc-500' : 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800/40 text-foreground'
+                      className={`p-3 rounded border transition-all cursor-pointer ${
+                        n.read 
+                          ? 'bg-[#FAF9FC] border-[#E7E3EC] text-[#96919F]' 
+                          : 'bg-white border-[#A78BFA]/40 text-[#17151C]'
                       }`}
                     >
-                      <div className="font-semibold text-foreground flex items-center justify-between">
+                      <div className="font-semibold flex items-center justify-between">
                         <span>{n.title}</span>
-                        {!n.read && <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>}
+                        {!n.read && <span className="w-1.5 h-1.5 rounded-full bg-[#A78BFA]"></span>}
                       </div>
-                      <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">{n.message}</p>
+                      <p className="text-[11px] text-[#696572] mt-1">{n.message}</p>
                     </div>
                   ))
                 )}
@@ -107,9 +102,9 @@ export const TopBar: React.FC = () => {
         </div>
 
         {/* User Avatar */}
-        <div className="flex items-center gap-2 pl-2 border-l border-zinc-200 dark:border-zinc-800">
+        <div className="flex items-center gap-2 pl-3 border-l border-[#E7E3EC]">
           <Link href="/profile">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-red-600 to-rose-400 flex items-center justify-center text-white font-bold text-xs shadow-red-glow">
+            <div className="w-7 h-7 rounded-full bg-[#17151C] text-[#FAF9FC] font-bold text-xs flex items-center justify-center">
               {user?.fullName?.charAt(0) || 'A'}
             </div>
           </Link>
@@ -118,3 +113,4 @@ export const TopBar: React.FC = () => {
     </header>
   );
 };
+

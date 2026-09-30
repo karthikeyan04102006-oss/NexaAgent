@@ -1,15 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import { useTheme } from '@/context/ThemeContext';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Settings, User, Shield, Bell, Sparkles, Building2, Key, CheckCircle2 } from 'lucide-react';
+import { Settings, User, Shield, Sparkles, Building2, CheckCircle2 } from 'lucide-react';
+import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
 
 export default function SettingsPage() {
   const { user, logout } = useAuth();
-  const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'ai' | 'org'>('profile');
+  const { theme, setTheme } = useTheme();
+  const [activeTab, setActiveTab] = useState<'account' | 'security' | 'notifications' | 'integrations' | 'appearance'>('account');
   const [savedSuccess, setSavedSuccess] = useState(false);
 
   const handleSave = (e: React.FormEvent) => {
@@ -18,159 +22,155 @@ export default function SettingsPage() {
     setTimeout(() => setSavedSuccess(false), 2500);
   };
 
+  const tabs = [
+    { id: 'account', label: 'Account', icon: User },
+    { id: 'security', label: 'Security', icon: Shield },
+    { id: 'notifications', label: 'Notifications', icon: Sparkles },
+    { id: 'integrations', label: 'Integrations', icon: Building2 },
+    { id: 'appearance', label: 'Appearance', icon: Settings },
+  ];
+
   return (
     <DashboardLayout>
-      <div className="space-y-6 max-w-5xl mx-auto">
+      <div className="space-y-8 max-w-5xl mx-auto">
         {/* HEADER */}
-        <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
-            <Settings className="w-7 h-7 text-red-500" /> Platform Settings
+        <div className="border-b border-[#E7E3EC] pb-6 space-y-2">
+          <div className="text-[10px] font-mono uppercase tracking-widest font-semibold text-[#A78BFA]">
+            PREFERENCES
+          </div>
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#17151C]">
+            Settings
           </h1>
-          <p className="text-xs text-zinc-400 mt-1">
-            Manage personal profile, security sessions, AI orchestrator preferences, and organization RBAC.
-          </p>
         </div>
 
-        {/* SETTINGS TABS */}
-        <div className="flex items-center gap-2 border-b border-zinc-800 pb-2">
-          {[
-            { id: 'profile', label: 'Account Profile', icon: User },
-            { id: 'security', label: 'Security & Sessions', icon: Shield },
-            { id: 'ai', label: 'AI Preferences', icon: Sparkles },
-            { id: 'org', label: 'Organization Settings', icon: Building2 },
-          ].map(tab => {
-            const Icon = tab.icon;
+        {/* SETTINGS SECTIONS TABS */}
+        <div className="flex items-center gap-2 border-b border-[#E7E3EC] pb-2 overflow-x-auto">
+          {tabs.map(tab => {
             const isSelected = activeTab === tab.id;
             return (
-              <button
+              <Button
                 key={tab.id}
+                variant={isSelected ? "primary" : "ghost"}
+                size="sm"
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all ${
-                  isSelected
-                    ? 'bg-red-950/80 text-white border border-red-800/80 shadow-red-glow'
-                    : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
-                }`}
               >
-                <Icon className="w-4 h-4 text-red-500" />
-                <span>{tab.label}</span>
-              </button>
+                {tab.label}
+              </Button>
             );
           })}
         </div>
 
         {savedSuccess && (
-          <div className="p-3 bg-emerald-950/60 border border-emerald-800 rounded-xl text-xs text-emerald-300 flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4" /> Settings updated successfully!
+          <div className="p-4 bg-[#FAF9FC] border border-[#E7E3EC] text-xs text-[#6D5BA6] flex items-center gap-2 font-medium rounded">
+            <CheckCircle2 className="w-4 h-4 text-[#A78BFA]" /> Settings saved.
           </div>
         )}
 
-        {/* TAB 1: PROFILE */}
-        {activeTab === 'profile' && (
-          <Card variant="glow" className="p-6 space-y-6">
-            <h3 className="text-base font-bold text-white">Personal Profile</h3>
+        {/* SECTION 1: ACCOUNT */}
+        {activeTab === 'account' && (
+          <Card className="p-8 space-y-6">
+            <h3 className="text-base font-bold text-[#17151C] border-b border-[#E7E3EC] pb-3">Account</h3>
             <form onSubmit={handleSave} className="space-y-4 max-w-lg text-xs">
               <div>
-                <label className="block text-zinc-400 font-semibold mb-1">Full Name</label>
+                <label className="block text-xs font-semibold text-[#17151C] mb-1.5">Full Name</label>
                 <input
                   type="text"
                   defaultValue={user?.fullName || 'Alex Vance'}
-                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-white"
+                  className="w-full bg-[#FAF9FC] border border-[#E7E3EC] rounded-md focus:border-[#A78BFA] px-4 py-2.5 text-xs text-[#17151C] focus:outline-none transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-zinc-400 font-semibold mb-1">Email Address</label>
+                <label className="block text-xs font-semibold text-[#17151C] mb-1.5">Email</label>
                 <input
                   type="email"
                   disabled
-                  defaultValue={user?.email || 'alex@enterprise.com'}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-zinc-400 cursor-not-allowed"
+                  defaultValue={user?.email || 'alex@enterprise-nexa.io'}
+                  className="w-full bg-[#FAF9FC] border border-[#E7E3EC] rounded-md px-4 py-2.5 text-xs text-[#96919F] cursor-not-allowed font-mono"
                 />
               </div>
 
-              <div>
-                <label className="block text-zinc-400 font-semibold mb-1">Account Role</label>
-                <input
-                  type="text"
-                  disabled
-                  defaultValue={user?.role?.toUpperCase()}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-red-400 font-mono font-bold cursor-not-allowed uppercase"
-                />
-              </div>
-
-              <Button type="submit" variant="primary">Save Changes</Button>
+              <Button type="submit" variant="primary">
+                Save Changes
+              </Button>
             </form>
           </Card>
         )}
 
-        {/* TAB 2: SECURITY */}
+        {/* SECTION 2: SECURITY */}
         {activeTab === 'security' && (
-          <Card className="p-6 space-y-6">
-            <h3 className="text-base font-bold text-white">Security & Active Sessions</h3>
-
+          <Card className="p-8 space-y-6">
+            <h3 className="text-base font-bold text-[#17151C] border-b border-[#E7E3EC] pb-3">Security</h3>
             <div className="space-y-4 text-xs max-w-lg">
-              <div className="p-4 bg-zinc-950 rounded-xl border border-zinc-800 space-y-2">
-                <div className="font-bold text-white flex items-center justify-between">
-                  <span>Change Password</span>
-                  <Key className="w-4 h-4 text-zinc-500" />
-                </div>
-                <input type="password" placeholder="Current password" className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded text-white" />
-                <input type="password" placeholder="New password" className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded text-white" />
-                <Button size="sm" variant="secondary">Update Password</Button>
+              <div className="p-5 bg-[#FAF9FC] border border-[#E7E3EC] rounded-md space-y-3">
+                <div className="font-semibold text-[#17151C]">Change Password</div>
+                <input type="password" placeholder="Current password" className="w-full bg-white border border-[#E7E3EC] rounded-md p-2.5 text-xs text-[#17151C] focus:outline-none" />
+                <input type="password" placeholder="New password" className="w-full bg-white border border-[#E7E3EC] rounded-md p-2.5 text-xs text-[#17151C] focus:outline-none" />
+                <Button size="sm" variant="primary">
+                  Update Password
+                </Button>
               </div>
 
-              <div className="p-4 bg-zinc-950 rounded-xl border border-zinc-800 space-y-2">
-                <div className="font-bold text-white">Active Sessions</div>
-                <div className="text-zinc-400 flex items-center justify-between">
-                  <span>Chrome / Windows (Current Session)</span>
-                  <span className="text-emerald-400 font-mono text-[10px]">ACTIVE NOW</span>
+              <div className="p-5 bg-[#FAF9FC] border border-[#E7E3EC] rounded-md space-y-3">
+                <div className="font-semibold text-[#17151C]">Active Sessions</div>
+                <div className="text-[#696572] flex items-center justify-between text-xs">
+                  <span>Current Browser Session</span>
+                  <span className="text-[#6D5BA6] font-mono text-[10px] uppercase font-bold">ACTIVE</span>
                 </div>
-                <Button size="sm" variant="danger" onClick={logout}>Logout All Sessions</Button>
-              </div>
-            </div>
-          </Card>
-        )}
-
-        {/* TAB 3: AI PREFERENCES */}
-        {activeTab === 'ai' && (
-          <Card className="p-6 space-y-4">
-            <h3 className="text-base font-bold text-white">AI Orchestrator Preferences</h3>
-            <div className="space-y-3 text-xs text-zinc-300">
-              <div className="p-3 bg-zinc-950 border border-zinc-800 rounded-xl flex items-center justify-between">
-                <div>
-                  <div className="font-bold text-white">Primary AI Model</div>
-                  <div className="text-zinc-400">Gemini 1.5 Pro (Configured)</div>
-                </div>
-                <span className="px-2 py-1 rounded bg-red-950 text-red-300 border border-red-800 font-mono">ACTIVE</span>
-              </div>
-
-              <div className="p-3 bg-zinc-950 border border-zinc-800 rounded-xl flex items-center justify-between">
-                <div>
-                  <div className="font-bold text-white">Secondary Model Support</div>
-                  <div className="text-zinc-400">OpenAI GPT-4o Connector Architecture</div>
-                </div>
-                <span className="px-2 py-1 rounded bg-zinc-900 text-zinc-500 border border-zinc-800 font-mono">READY</span>
-              </div>
-
-              <div className="p-3 bg-zinc-950 border border-zinc-800 rounded-xl flex items-center justify-between">
-                <div>
-                  <div className="font-bold text-white">Human Approval Strictness</div>
-                  <div className="text-zinc-400">Require authorization for all financial & messaging actions</div>
-                </div>
-                <input type="checkbox" defaultChecked className="w-4 h-4 accent-red-600" />
+                <Button size="sm" onClick={logout} variant="secondary">
+                  Sign out
+                </Button>
               </div>
             </div>
           </Card>
         )}
 
-        {/* TAB 4: ORGANIZATION */}
-        {activeTab === 'org' && (
-          <Card className="p-6 space-y-4">
-            <h3 className="text-base font-bold text-white">Organization Configuration</h3>
-            <div className="text-xs text-zinc-400 space-y-2">
-              <p>Organization Name: <strong className="text-white">{user?.organizationName || 'Nexa Technologies Inc.'}</strong></p>
-              <p>Plan Tier: <strong className="text-emerald-400">Enterprise SaaS Tier</strong></p>
-              <p>Data Isolation: <strong className="text-white">Supabase PostgreSQL RLS Enabled</strong></p>
+        {/* SECTION 3: NOTIFICATIONS */}
+        {activeTab === 'notifications' && (
+          <Card className="p-8 space-y-6">
+            <h3 className="text-base font-bold text-[#17151C] border-b border-[#E7E3EC] pb-3">Notifications</h3>
+            <div className="space-y-4 text-xs text-[#696572]">
+              <div className="p-4 bg-[#FAF9FC] border border-[#E7E3EC] rounded-md flex items-center justify-between">
+                <div>
+                  <div className="font-semibold text-[#17151C]">Task Completion Alerts</div>
+                  <div className="text-xs text-[#696572] mt-0.5">Receive notifications when an agent run finishes</div>
+                </div>
+                <input type="checkbox" defaultChecked className="w-4 h-4 accent-[#A78BFA]" />
+              </div>
+
+              <div className="p-4 bg-[#FAF9FC] border border-[#E7E3EC] rounded-md flex items-center justify-between">
+                <div>
+                  <div className="font-semibold text-[#17151C]">Human Approval Alerts</div>
+                  <div className="text-xs text-[#696572] mt-0.5">Immediate notifications for required authorizations</div>
+                </div>
+                <input type="checkbox" defaultChecked className="w-4 h-4 accent-[#A78BFA]" />
+              </div>
+            </div>
+          </Card>
+        )}
+
+        {/* SECTION 4: INTEGRATIONS */}
+        {activeTab === 'integrations' && (
+          <Card className="p-8 space-y-6">
+            <h3 className="text-base font-bold text-[#17151C] border-b border-[#E7E3EC] pb-3">Integrations</h3>
+            <p className="text-xs text-[#696572]">
+              Manage tool connections and API tokens for your agent work.
+            </p>
+            <Link href="/integrations">
+              <Button variant="primary" size="sm">Go to Integrations →</Button>
+            </Link>
+          </Card>
+        )}
+
+        {/* SECTION 5: APPEARANCE */}
+        {activeTab === 'appearance' && (
+          <Card className="p-8 space-y-6">
+            <h3 className="text-base font-bold text-[#17151C] dark:text-[#F5F3FF] border-b border-[#E7E3EC] dark:border-[#23222B] pb-3">Appearance</h3>
+            <div className="space-y-4 text-xs">
+              <p className="text-[#696572] dark:text-[#A7A3B2]">Choose your preferred theme mode across NexaAgent:</p>
+              <div>
+                <ThemeSwitcher />
+              </div>
             </div>
           </Card>
         )}
@@ -178,3 +178,4 @@ export default function SettingsPage() {
     </DashboardLayout>
   );
 }
+

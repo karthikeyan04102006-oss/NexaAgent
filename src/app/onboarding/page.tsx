@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import confetti from 'canvas-confetti';
 import { 
-  Sparkles, 
   ArrowRight, 
   Check, 
   Calendar, 
@@ -66,26 +65,24 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col justify-between p-6 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-
+    <div className="min-h-screen bg-[#F5F4F0] text-[#111111] flex flex-col justify-between p-6 md:p-10 relative">
       {/* Header Progress Stepper */}
-      <header className="max-w-3xl mx-auto w-full flex items-center justify-between py-4 relative z-10">
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-6 h-6 text-red-500" />
-          <span className="font-extrabold text-xl">NexaAgent</span>
+      <header className="max-w-3xl mx-auto w-full flex items-center justify-between py-4 relative z-10 border-b border-[#DAD8D2]">
+        <div className="flex items-center gap-3">
+          <span className="text-xs font-mono tracking-widest text-[#830000] uppercase">ONBOARDING</span>
+          <span className="font-serif font-medium text-xl text-[#111111]">NexaAgent</span>
         </div>
 
         <div className="flex items-center gap-3">
           {[1, 2, 3, 4].map(s => (
             <div
               key={s}
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+              className={`w-8 h-8 flex items-center justify-center text-xs font-mono transition-all ${
                 s === step
-                  ? 'bg-red-gradient text-white shadow-red-glow scale-110'
+                  ? 'bg-[#111111] text-white border border-[#111111]'
                   : s < step
-                  ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
-                  : 'bg-zinc-900 text-zinc-600 border border-zinc-800'
+                  ? 'bg-[#FAFAF7] text-[#830000] border border-[#DAD8D2]'
+                  : 'bg-transparent text-[#777777] border border-[#DAD8D2]'
               }`}
             >
               {s < step ? <Check className="w-4 h-4" /> : s}
@@ -98,28 +95,24 @@ export default function OnboardingPage() {
       <main className="max-w-2xl mx-auto w-full my-auto py-8 relative z-10 space-y-6">
         {/* STEP 1: WELCOME */}
         {step === 1 && (
-          <div className="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-8 space-y-6 shadow-red-glow text-center">
-            <div className="w-16 h-16 rounded-2xl bg-red-gradient p-0.5 mx-auto shadow-red-glow">
-              <div className="w-full h-full bg-zinc-950 rounded-[14px] flex items-center justify-center">
-                <Sparkles className="w-8 h-8 text-red-500" />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <h1 className="text-3xl font-extrabold text-white">Welcome to NexaAgent</h1>
-              <p className="text-sm text-zinc-400 max-w-md mx-auto">
+          <div className="bg-[#FFFFFF] border border-[#DAD8D2] p-8 md:p-10 space-y-6 shadow-sm text-center">
+            <div className="text-[10px] font-mono tracking-widest uppercase text-[#830000]">01 / INITIALIZATION</div>
+            
+            <div className="space-y-3">
+              <h1 className="text-3xl font-serif font-medium text-[#111111]">WELCOME TO NEXAAGENT</h1>
+              <p className="text-sm text-[#555555] max-w-md mx-auto leading-relaxed">
                 Your autonomous AI agent platform. Give high-level goals in natural language and let NexaAgent handle planning, tool selection, and execution.
               </p>
             </div>
 
-            <div className="p-4 bg-zinc-900/80 border border-zinc-800 rounded-xl text-xs text-zinc-300 text-left space-y-2">
-              <div className="font-semibold text-red-400 flex items-center gap-1.5">
+            <div className="p-4 bg-[#FAFAF7] border border-[#DAD8D2] text-xs text-[#555555] text-left space-y-2">
+              <div className="font-mono uppercase tracking-wider text-[#830000] flex items-center gap-1.5 text-[11px]">
                 <CheckCircle2 className="w-4 h-4" /> Built for Enterprise Autonomy
               </div>
               <p>NexaAgent runs autonomous execution loops with Human-in-the-Loop approval for sensitive operations like email sending and bookings.</p>
             </div>
 
-            <Button onClick={() => setStep(2)} size="lg" className="w-full font-semibold" icon={<ArrowRight className="w-5 h-5" />}>
+            <Button onClick={() => setStep(2)} variant="primary" size="lg" className="w-full" icon={<ArrowRight className="w-4 h-4" />}>
               Get Started
             </Button>
           </div>
@@ -127,11 +120,11 @@ export default function OnboardingPage() {
 
         {/* STEP 2: GOAL PREFERENCES */}
         {step === 2 && (
-          <div className="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-8 space-y-6 shadow-red-glow">
+          <div className="bg-[#FFFFFF] dark:bg-[#111116] border border-[#DAD8D2] dark:border-[#26242C] p-8 md:p-10 space-y-6 shadow-sm">
             <div>
-              <span className="text-xs font-mono text-red-400 uppercase tracking-widest">Step 2 of 4</span>
-              <h2 className="text-2xl font-bold text-white mt-1">What do you want your agent to help with?</h2>
-              <p className="text-xs text-zinc-400 mt-1">Select one or more categories to customize your agent workspace.</p>
+              <span className="text-[10px] font-mono text-[#A78BFA] uppercase tracking-widest">Step 2 of 4</span>
+              <h2 className="text-2xl font-serif font-medium text-[#17151C] dark:text-[#F5F3FF] mt-1">What do you want your agent to help with?</h2>
+              <p className="text-xs text-[#696572] dark:text-[#A7A3B2] mt-1">Select one or more categories to customize your agent workspace.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -142,25 +135,25 @@ export default function OnboardingPage() {
                   <div
                     key={g.id}
                     onClick={() => toggleGoal(g.id)}
-                    className={`p-3.5 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                    className={`p-4 border flex items-center justify-between cursor-pointer transition-all rounded-[10px] ${
                       isSelected
-                        ? 'bg-red-950/40 border-red-600 text-white shadow-red-glow'
-                        : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                        ? 'bg-[#A78BFA] text-[#17151C] border-[#A78BFA] font-semibold'
+                        : 'bg-[#FAF9FC] dark:bg-[#08080A] border-[#E7E3EC] dark:border-[#26242C] text-[#696572] dark:text-[#A7A3B2] hover:border-[#A78BFA]'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <Icon className={`w-5 h-5 ${isSelected ? 'text-red-400' : 'text-zinc-500'}`} />
-                      <span className="text-xs font-semibold text-white">{g.label}</span>
+                      <Icon className={`w-4 h-4 ${isSelected ? 'text-[#17151C]' : 'text-[#A78BFA]'}`} />
+                      <span className="text-xs font-mono uppercase tracking-wider">{g.label}</span>
                     </div>
-                    {isSelected && <Check className="w-4 h-4 text-red-400" />}
+                    {isSelected && <Check className="w-4 h-4 text-[#17151C]" />}
                   </div>
                 );
               })}
             </div>
 
-            <div className="flex items-center justify-between pt-4 border-t border-zinc-800">
+            <div className="flex items-center justify-between pt-4 border-t border-[#E7E3EC] dark:border-[#26242C]">
               <Button variant="ghost" onClick={() => setStep(1)}>Back</Button>
-              <Button onClick={() => setStep(3)} icon={<ArrowRight className="w-4 h-4" />}>
+              <Button variant="primary" onClick={() => setStep(3)} icon={<ArrowRight className="w-4 h-4" />}>
                 Continue to Integrations
               </Button>
             </div>
@@ -169,11 +162,11 @@ export default function OnboardingPage() {
 
         {/* STEP 3: CONNECT INTEGRATIONS */}
         {step === 3 && (
-          <div className="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-8 space-y-6 shadow-red-glow">
+          <div className="bg-[#FFFFFF] dark:bg-[#111116] border border-[#DAD8D2] dark:border-[#26242C] p-8 md:p-10 space-y-6 shadow-sm">
             <div>
-              <span className="text-xs font-mono text-red-400 uppercase tracking-widest">Step 3 of 4</span>
-              <h2 className="text-2xl font-bold text-white mt-1">Connect Integrations</h2>
-              <p className="text-xs text-zinc-400 mt-1">Enable agent tools for calendar sync, email drafting, and location search.</p>
+              <span className="text-[10px] font-mono text-[#A78BFA] uppercase tracking-widest">Step 3 of 4</span>
+              <h2 className="text-2xl font-serif font-medium text-[#17151C] dark:text-[#F5F3FF] mt-1">Connect Integrations</h2>
+              <p className="text-xs text-[#696572] dark:text-[#A7A3B2] mt-1">Enable agent tools for calendar sync, email drafting, and location search.</p>
             </div>
 
             <div className="space-y-3">
@@ -181,35 +174,32 @@ export default function OnboardingPage() {
                 const Icon = integ.icon;
                 const isConnected = connectedIntegrations.includes(integ.id);
                 return (
-                  <div key={integ.id} className="p-4 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-between">
+                  <div key={integ.id} className="p-4 bg-[#FAF9FC] dark:bg-[#08080A] border border-[#E7E3EC] dark:border-[#26242C] flex items-center justify-between rounded-[10px]">
                     <div className="flex items-center gap-3">
-                      <div className="p-2.5 bg-zinc-950 rounded-lg border border-zinc-800 text-red-400">
-                        <Icon className="w-5 h-5" />
+                      <div className="p-2.5 bg-[#FFFFFF] dark:bg-[#111116] border border-[#E7E3EC] dark:border-[#26242C] text-[#A78BFA]">
+                        <Icon className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="text-sm font-bold text-white">{integ.name}</div>
-                        <div className="text-xs text-zinc-400">{integ.description}</div>
+                        <div className="text-xs font-mono uppercase tracking-wider text-[#17151C] dark:text-[#F5F3FF] font-semibold">{integ.name}</div>
+                        <div className="text-xs text-[#696572] dark:text-[#A7A3B2]">{integ.description}</div>
                       </div>
                     </div>
 
-                    <button
+                    <Button
+                      variant={isConnected ? "primary" : "secondary"}
+                      size="sm"
                       onClick={() => toggleIntegration(integ.id)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-                        isConnected
-                          ? 'bg-emerald-950 text-emerald-300 border-emerald-800'
-                          : 'bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700'
-                      }`}
                     >
                       {isConnected ? 'Connected' : 'Connect'}
-                    </button>
+                    </Button>
                   </div>
                 );
               })}
             </div>
 
-            <div className="flex items-center justify-between pt-4 border-t border-zinc-800">
+            <div className="flex items-center justify-between pt-4 border-t border-[#E7E3EC] dark:border-[#26242C]">
               <Button variant="ghost" onClick={() => setStep(2)}>Back</Button>
-              <Button onClick={() => setStep(4)} icon={<ArrowRight className="w-4 h-4" />}>
+              <Button variant="primary" onClick={() => setStep(4)} icon={<ArrowRight className="w-4 h-4" />}>
                 Proceed to Completion
               </Button>
             </div>
@@ -218,33 +208,35 @@ export default function OnboardingPage() {
 
         {/* STEP 4: READY & LAUNCH */}
         {step === 4 && (
-          <div className="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-8 space-y-6 shadow-red-glow text-center">
-            <div className="w-16 h-16 rounded-full bg-emerald-950 border border-emerald-700 text-emerald-400 flex items-center justify-center mx-auto shadow-emerald- glow">
+          <div className="bg-[#FFFFFF] dark:bg-[#111116] border border-[#DAD8D2] dark:border-[#26242C] p-8 md:p-10 space-y-6 shadow-sm text-center">
+            <div className="w-16 h-16 bg-[#FAF9FC] dark:bg-[#08080A] border border-[#E7E3EC] dark:border-[#26242C] text-[#A78BFA] flex items-center justify-center mx-auto rounded-full">
               <CheckCircle2 className="w-8 h-8" />
             </div>
 
             <div className="space-y-2">
-              <h2 className="text-3xl font-extrabold text-white">You're ready.</h2>
-              <p className="text-sm text-zinc-400 max-w-md mx-auto">
+              <div className="text-[10px] font-mono tracking-widest uppercase text-[#A78BFA]">04 / READY</div>
+              <h2 className="text-3xl font-serif font-medium text-[#17151C] dark:text-[#F5F3FF]">YOU ARE READY</h2>
+              <p className="text-xs text-[#696572] dark:text-[#A7A3B2] max-w-md mx-auto">
                 Your NexaAgent command center is fully configured and ready to execute your goals.
               </p>
             </div>
 
-            <div className="p-4 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-zinc-300 space-y-1 text-left">
-              <div className="font-semibold text-white">Sample First Goal to try:</div>
-              <div className="text-red-400 font-mono italic">"Plan my Chennai trip under ₹15,000"</div>
+            <div className="p-4 bg-[#FAF9FC] dark:bg-[#08080A] border border-[#E7E3EC] dark:border-[#26242C] text-xs text-[#696572] dark:text-[#A7A3B2] space-y-1 text-left rounded-[10px]">
+              <div className="font-mono uppercase tracking-wider text-[#17151C] dark:text-[#F5F3FF] text-[10px]">Sample First Goal to try:</div>
+              <div className="text-[#A78BFA] font-mono italic">"Plan my Chennai trip under ₹15,000"</div>
             </div>
 
-            <Button onClick={handleFinish} size="lg" className="w-full font-bold text-base" icon={<Sparkles className="w-5 h-5" />}>
+            <Button variant="primary" onClick={handleFinish} size="lg" className="w-full">
               Launch NexaAgent
             </Button>
           </div>
         )}
       </main>
 
-      <footer className="text-center text-xs text-zinc-600 py-4 relative z-10">
+      <footer className="text-center text-xs text-[#777777] font-mono py-4 relative z-10 border-t border-[#DAD8D2]">
         NexaAgent Setup Assistant • Step {step} of 4
       </footer>
     </div>
   );
 }
+

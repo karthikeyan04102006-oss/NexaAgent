@@ -14,10 +14,7 @@ import {
   Copy, 
   Trash2, 
   ExternalLink, 
-  Sparkles, 
-  Clock, 
-  Cpu, 
-  Filter 
+  Zap
 } from 'lucide-react';
 
 export default function TasksPage() {
@@ -36,98 +33,106 @@ export default function TasksPage() {
     await runGoal(goal);
   };
 
+  const statusOptions = [
+    { label: 'All', value: 'all' },
+    { label: 'Running', value: 'running' },
+    { label: 'Completed', value: 'completed' },
+    { label: 'Failed', value: 'failed' },
+  ];
+
   return (
     <DashboardLayout>
-      <div className="space-y-6 max-w-7xl mx-auto">
-        {/* HEADER */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="space-y-8 max-w-5xl mx-auto">
+        {/* EDITORIAL HEADER */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E7E3EC] pb-8">
           <div>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
-              <ListTodo className="w-7 h-7 text-red-500" /> Task Management
+            <div className="text-[10px] font-mono uppercase tracking-widest font-semibold text-[#A78BFA] mb-2">
+              AGENT LOGS
+            </div>
+            <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#17151C]">
+              Tasks
             </h1>
-            <p className="text-xs text-zinc-400 mt-1">
-              Inspect historical agent execution runs, retry failed steps, duplicate tasks, or examine audit outputs.
+            <p className="text-sm text-[#696572] mt-1">
+              Your recent agent work.
             </p>
           </div>
 
           <Link href="/agent">
-            <Button variant="primary" icon={<Sparkles className="w-4 h-4" />}>
-              Create New Task
+            <Button variant="primary" icon={<ListTodo className="w-4 h-4" />}>
+              Create Task
             </Button>
           </Link>
         </div>
 
-        {/* FILTERS & SEARCH BAR */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-zinc-950 p-4 rounded-xl border border-zinc-800">
-          <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
+        {/* EDITORIAL TABS & SEARCH BAR */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#E7E3EC] pb-4">
+          {/* Status Filter Tabs */}
+          <div className="flex items-center gap-2">
+            {statusOptions.map(opt => (
+              <Button
+                key={opt.value}
+                variant={statusFilter === opt.value ? "primary" : "ghost"}
+                size="sm"
+                onClick={() => setStatusFilter(opt.value)}
+              >
+                {opt.label}
+              </Button>
+            ))}
+          </div>
+
+          {/* Search Box */}
+          <div className="relative w-full md:w-72">
+            <Search className="w-3.5 h-3.5 text-[#96919F] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Search by task title or goal..."
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-red-600"
+              placeholder="Search tasks..."
+              className="w-full bg-[#FFFFFF] border border-[#E7E3EC] rounded-md pl-9 pr-3 py-1.5 text-xs text-[#17151C] placeholder-[#96919F] focus:outline-none focus:border-[#A78BFA]"
             />
-          </div>
-
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <Filter className="w-4 h-4 text-zinc-500" />
-            <select
-              value={statusFilter}
-              onChange={e => setStatusFilter(e.target.value)}
-              className="bg-zinc-900 border border-zinc-800 text-xs text-white rounded-xl px-3 py-2 focus:outline-none focus:border-red-600"
-            >
-              <option value="all">All Statuses</option>
-              <option value="completed">Completed</option>
-              <option value="running">Running</option>
-              <option value="failed">Failed</option>
-              <option value="approval_required">Approval Required</option>
-            </select>
           </div>
         </div>
 
-        {/* TASK LIST TABLE / CARDS */}
+        {/* EDITORIAL TASK LIST */}
         <div className="space-y-3">
           {filteredTasks.length === 0 ? (
-            <Card className="p-12 text-center text-zinc-500 space-y-3">
-              <ListTodo className="w-12 h-12 text-zinc-700 mx-auto" />
-              <div className="text-sm font-semibold text-white">Your agent workspace is ready.</div>
-              <p className="text-xs text-zinc-400">No tasks matching criteria found.</p>
+            <Card className="p-12 text-center text-[#96919F] space-y-3">
+              <ListTodo className="w-10 h-10 text-[#E7E3EC] mx-auto" />
+              <div className="text-base font-semibold text-[#17151C]">No tasks yet.</div>
               <Link href="/agent">
-                <Button size="sm" variant="primary">Create your first task</Button>
+                <Button size="sm" variant="primary">Create Task</Button>
               </Link>
             </Card>
           ) : (
             filteredTasks.map(task => (
-              <Card key={task.id} hoverEffect className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="space-y-1.5 min-w-0 flex-1">
+              <Card key={task.id} hoverEffect className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="space-y-2 min-w-0 flex-1">
                   <div className="flex items-center gap-3 flex-wrap">
-                    <span className="text-base font-bold text-white hover:text-red-400 transition-colors">
+                    <span className="text-base font-semibold text-[#17151C] hover:text-[#6D5BA6] transition-colors">
                       {task.title}
                     </span>
                     <Badge status={task.status} size="sm" />
                   </div>
 
-                  <p className="text-xs text-zinc-400 line-clamp-1">{task.originalGoal}</p>
+                  <p className="text-xs text-[#696572] line-clamp-1 leading-relaxed">{task.originalGoal}</p>
 
-                  <div className="flex items-center gap-4 text-[10px] text-zinc-500 font-mono pt-1 flex-wrap">
-                    <span>Created: {new Date(task.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                    <span>Model: {task.agentModel}</span>
-                    <span>Tools: {task.toolsUsed.join(', ') || 'Internal Engine'}</span>
-                    <span>Nodes: {task.nodes.length}</span>
+                  <div className="flex items-center gap-4 text-[10px] text-[#96919F] font-mono pt-1 flex-wrap">
+                    <span>TIME: {new Date(task.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                    <span>MODEL: {task.agentModel}</span>
+                    <span>TOOLS: {task.toolsUsed.join(', ') || 'Internal Engine'}</span>
                   </div>
                 </div>
 
                 {/* Task Action Buttons */}
-                <div className="flex items-center gap-2 shrink-0 border-t md:border-t-0 border-zinc-800 pt-3 md:pt-0">
+                <div className="flex items-center gap-2 shrink-0 border-t md:border-t-0 border-[#E7E3EC] pt-4 md:pt-0">
                   <Link href={`/tasks/${task.id}`}>
-                    <Button variant="outline" size="sm" icon={<ExternalLink className="w-3.5 h-3.5" />}>
-                      View
+                    <Button variant="secondary" size="sm" icon={<ExternalLink className="w-3.5 h-3.5" />}>
+                      Inspect
                     </Button>
                   </Link>
 
                   <Button
-                    variant="secondary"
+                    variant="outline"
                     size="sm"
                     onClick={() => retryTask(task.id)}
                     title="Retry Task"
@@ -137,7 +142,7 @@ export default function TasksPage() {
                   </Button>
 
                   <Button
-                    variant="secondary"
+                    variant="outline"
                     size="sm"
                     onClick={() => handleDuplicate(task.originalGoal)}
                     title="Duplicate Prompt"
@@ -146,13 +151,15 @@ export default function TasksPage() {
                     Duplicate
                   </Button>
 
-                  <button
+                  <Button
+                    variant="danger"
+                    size="icon"
                     onClick={() => deleteTask(task.id)}
                     title="Delete task"
-                    className="p-2 text-zinc-500 hover:text-rose-400 hover:bg-rose-950/40 rounded-lg transition-colors"
+                    aria-label="Delete task"
                   >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </Button>
                 </div>
               </Card>
             ))
@@ -162,3 +169,4 @@ export default function TasksPage() {
     </DashboardLayout>
   );
 }
+

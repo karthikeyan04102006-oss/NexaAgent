@@ -13,29 +13,52 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         surface: {
-          DEFAULT: "var(--card)",
+          DEFAULT: "var(--surface)",
           elevated: "var(--card)",
           border: "var(--card-border)",
         },
+        editorial: {
+          bg: "#F7F6FA",
+          surface: "#FAF9FC",
+          card: "#FFFFFF",
+          text: "#17151C",
+          secondary: "#696572",
+          muted: "#96919F",
+          border: "#E7E3EC",
+          accent: "#A78BFA",
+          secondaryAccent: "#C4B5FD",
+          softPurple: "#DDD6FE",
+          darkPurple: "#6D5BA6",
+        },
+        purpleAccent: {
+          primary: "#A78BFA",
+          secondary: "#C4B5FD",
+          soft: "#DDD6FE",
+          dark: "#6D5BA6",
+        },
         nexa: {
-          darkred: "#830000",
-          crimson: "#BC0202",
-          red: "#FF0000",
-          glow: "rgba(188, 2, 2, 0.25)",
-          accent: "#ff2a2a"
+          purple: "#A78BFA",
+          softPurple: "#C4B5FD",
+          darkPurple: "#6D5BA6",
+          glow: "rgba(167, 139, 250, 0.12)",
+          accent: "#A78BFA"
         }
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "Inter", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"]
+        sans: ["var(--font-inter)", "Inter", "-apple-system", "sans-serif"],
+        display: ["var(--font-inter)", "Inter", "-apple-system", "sans-serif"],
+        mono: ["JetBrains Mono", "SF Mono", "Courier New", "monospace"]
       },
-      backgroundImage: {
-        "red-gradient": "linear-gradient(135deg, #830000 0%, #BC0202 50%, #FF0000 100%)",
+      letterSpacing: {
+        tighter: "-0.04em",
+        tight: "-0.02em",
+        widest: "0.18em",
       },
       boxShadow: {
-        'red-glow': '0 0 20px -3px rgba(188, 2, 2, 0.3)',
-        'red-glow-lg': '0 0 35px -5px rgba(255, 0, 0, 0.4)',
-        'subtle': '0 2px 10px 0 rgba(0, 0, 0, 0.05)',
+        'editorial': '0 1px 3px rgba(0,0,0,0.04), 0 10px 30px rgba(0,0,0,0.02)',
+        'editorial-hover': '0 4px 20px rgba(0,0,0,0.06)',
+        'red-accent': '0 0 15px rgba(131, 0, 0, 0.15)',
+        'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
       }
     },
   },

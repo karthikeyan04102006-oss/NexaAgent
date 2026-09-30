@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Sparkles, Lock, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Lock, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
 export default function ResetPasswordPage() {
@@ -27,73 +27,73 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center p-4 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none"></div>
-
-      <div className="w-full max-w-md bg-zinc-950/90 border border-zinc-800 rounded-2xl p-8 space-y-6 shadow-red-glow relative z-10">
-        <div className="text-center space-y-2">
-          <Link href="/" className="inline-flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-red-500" />
-            <span className="text-xl font-extrabold text-white">NexaAgent</span>
+    <div className="min-h-screen bg-[#F5F4F0] text-[#111111] flex items-center justify-center p-6 relative">
+      <div className="w-full max-w-md bg-[#FFFFFF] border border-[#DAD8D2] p-8 space-y-6 shadow-sm relative z-10">
+        <div className="text-center space-y-2 border-b border-[#DAD8D2] pb-6">
+          <Link href="/" className="inline-flex items-center gap-2 mb-2">
+            <span className="text-xs font-mono tracking-widest text-[#830000] uppercase">SECURITY</span>
+            <span className="text-xl font-serif font-medium text-[#111111]">NexaAgent</span>
           </Link>
-          <h2 className="text-lg font-bold text-white pt-2">Set New Password</h2>
-          <p className="text-xs text-zinc-400">Enter your new secure account password below.</p>
+          <h1 className="text-2xl font-serif font-medium text-[#111111]">SET NEW PASSWORD</h1>
+          <p className="text-xs text-[#555555]">Enter your new secure account password below.</p>
         </div>
 
         {errorMsg && (
-          <div className="p-3 bg-red-950/80 border border-red-800 rounded-xl text-xs text-red-300 text-center font-medium">
+          <div className="p-3 bg-[#FFF5F5] border border-[#BC0202]/30 text-xs text-[#BC0202] text-center font-medium">
             {errorMsg}
           </div>
         )}
 
         {submitted ? (
-          <div className="p-4 bg-emerald-950/60 border border-emerald-800 rounded-xl text-center space-y-2">
-            <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto" />
-            <h3 className="text-sm font-bold text-white">Password Updated</h3>
-            <p className="text-xs text-zinc-300">Your password has been reset successfully. Redirecting to Sign In...</p>
+          <div className="p-5 bg-[#FAFAF7] border border-[#DAD8D2] text-center space-y-3">
+            <CheckCircle2 className="w-8 h-8 text-[#830000] mx-auto" />
+            <h3 className="text-sm font-mono uppercase tracking-wider font-semibold text-[#111111]">Password Updated</h3>
+            <p className="text-xs text-[#555555]">Your password has been reset successfully. Redirecting to Sign In...</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-1">
+              <label className="block text-[11px] font-mono uppercase tracking-widest text-[#555555] mb-2">
                 New Password
               </label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Lock className="w-4 h-4 text-[#777777] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-red-600"
+                  className="w-full bg-[#FAFAF7] border border-[#DAD8D2] focus:border-[#111111] px-4 pl-10 py-3 text-sm text-[#111111] focus:outline-none transition-colors"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-1">
+              <label className="block text-[11px] font-mono uppercase tracking-widest text-[#555555] mb-2">
                 Confirm New Password
               </label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Lock className="w-4 h-4 text-[#777777] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="password"
                   required
                   value={confirmPassword}
                   onChange={e => setConfirmPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-red-600"
+                  className="w-full bg-[#FAFAF7] border border-[#DAD8D2] focus:border-[#111111] px-4 pl-10 py-3 text-sm text-[#111111] focus:outline-none transition-colors"
                 />
               </div>
             </div>
 
-            <Button type="submit" className="w-full">Reset Password</Button>
+            <Button type="submit" className="w-full bg-[#111111] hover:bg-[#830000] text-white py-3 font-mono text-xs uppercase tracking-wider transition-colors">
+              Reset Password
+            </Button>
           </form>
         )}
 
-        <div className="text-center">
-          <Link href="/login" className="inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white">
+        <div className="text-center pt-2">
+          <Link href="/login" className="inline-flex items-center gap-1.5 text-xs text-[#555555] hover:text-[#111111] font-mono">
             <ArrowLeft className="w-3.5 h-3.5" /> Back to Sign In
           </Link>
         </div>
@@ -101,3 +101,4 @@ export default function ResetPasswordPage() {
     </div>
   );
 }
+

@@ -3,9 +3,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Settings, Building2, Shield, CheckCircle2, Key, Database } from 'lucide-react';
+import { Settings, Shield, CheckCircle2 } from 'lucide-react';
 
 export default function ClientSettingsPage() {
   const { user } = useAuth();
@@ -19,59 +18,61 @@ export default function ClientSettingsPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6 max-w-4xl mx-auto">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/80 text-red-400 border border-red-800 text-xs font-semibold mb-1 shadow-red-glow">
-            <Shield className="w-3.5 h-3.5" />
-            <span>Client Admin Settings</span>
+      <div className="space-y-10 max-w-4xl mx-auto py-2">
+        {/* HEADER */}
+        <div className="border-b border-[#DAD8D2] pb-6 space-y-2">
+          <div className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#830000] uppercase">
+            <Shield className="w-4 h-4 text-[#830000]" />
+            <span>ORGANIZATION GOVERNANCE</span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
-            <Settings className="w-7 h-7 text-red-500" /> Organization Settings & Governance
+          <h1 className="text-3xl md:text-4xl font-serif font-medium text-[#111111] tracking-tight flex items-center gap-3">
+            ORGANIZATION SETTINGS & GOVERNANCE
           </h1>
-          <p className="text-xs text-zinc-400 mt-1">
+          <p className="text-xs text-[#555555] font-sans">
             Configure organization branding, security policies, API key storage, and Row Level Security rules.
           </p>
         </div>
 
         {savedSuccess && (
-          <div className="p-3 bg-emerald-950/60 border border-emerald-800 rounded-xl text-xs text-emerald-300 flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4" /> Organization policies updated successfully!
+          <div className="p-4 bg-[#FAFAF7] border border-[#DAD8D2] text-xs text-[#830000] font-mono flex items-center gap-2 uppercase tracking-wider">
+            <CheckCircle2 className="w-4 h-4 text-[#830000]" /> Organization policies updated successfully!
           </div>
         )}
 
-        <Card variant="glow" className="p-6 space-y-6">
-          <h3 className="text-base font-bold text-white">General Organization Details</h3>
+        <div className="bg-[#FFFFFF] border border-[#DAD8D2] p-8 space-y-6">
+          <h3 className="text-lg font-serif font-medium text-[#111111] border-b border-[#DAD8D2] pb-4">GENERAL ORGANIZATION DETAILS</h3>
 
-          <form onSubmit={handleSave} className="space-y-4 max-w-lg text-xs">
+          <form onSubmit={handleSave} className="space-y-6 max-w-lg text-xs">
             <div>
-              <label className="block text-zinc-300 font-semibold mb-1 uppercase tracking-wider">
+              <label className="block text-[11px] font-mono uppercase tracking-widest text-[#555555] mb-2">
                 Organization Name
               </label>
               <input
                 type="text"
                 defaultValue={user?.organizationName || 'Nexa Technologies Inc.'}
-                className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-red-600"
+                className="w-full bg-[#FAFAF7] border border-[#DAD8D2] focus:border-[#111111] px-4 py-3 text-sm text-[#111111] focus:outline-none transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-zinc-300 font-semibold mb-1 uppercase tracking-wider">
+              <label className="block text-[11px] font-mono uppercase tracking-widest text-[#555555] mb-2">
                 Enterprise Plan Status
               </label>
-              <div className="flex items-center justify-between p-3 bg-zinc-900 border border-zinc-800 rounded-xl text-zinc-200">
-                <span className="font-bold text-emerald-400">Enterprise SaaS Tier</span>
-                <span className="text-[10px] font-mono bg-emerald-950 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800">ACTIVE</span>
+              <div className="flex items-center justify-between p-4 bg-[#FAFAF7] border border-[#DAD8D2] text-[#111111]">
+                <span className="font-serif font-medium text-sm">Enterprise SaaS Tier</span>
+                <span className="text-[10px] font-mono bg-[#111111] text-white px-2.5 py-1 uppercase tracking-widest">ACTIVE</span>
               </div>
             </div>
 
             <div className="pt-2">
-              <Button type="submit" variant="primary">
+              <Button type="submit" className="bg-[#111111] hover:bg-[#830000] text-white py-3 px-6 font-mono text-xs uppercase tracking-wider transition-colors">
                 Save Organization Settings
               </Button>
             </div>
           </form>
-        </Card>
+        </div>
       </div>
     </DashboardLayout>
   );
 }
+

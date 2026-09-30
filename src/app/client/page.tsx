@@ -7,119 +7,110 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { DEMO_ANALYTICS, DEMO_ORGANIZATION } from '@/lib/demo-data';
-import { Building2, Users, BarChart3, Settings, ShieldCheck, Zap, TrendingUp, Cpu, Activity } from 'lucide-react';
+import { Users, BarChart3, Settings, ShieldCheck, Zap, Activity } from 'lucide-react';
 
 export default function ClientAdminDashboardPage() {
   const { user } = useAuth();
 
   return (
     <DashboardLayout>
-      <div className="space-y-6 max-w-7xl mx-auto">
-        {/* HEADER */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="space-y-8 max-w-5xl mx-auto">
+        {/* EDITORIAL HEADER */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E7E3EC] pb-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/80 text-red-400 border border-red-800 text-xs font-semibold mb-1 shadow-red-glow">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Client Admin Control Center</span>
+            <div className="text-[10px] font-mono uppercase tracking-widest font-semibold text-[#A78BFA] mb-2">
+              ORGANIZATION
             </div>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
-              {user?.organizationName || DEMO_ORGANIZATION.name}
+            <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#17151C]">
+              Organization
             </h1>
-            <p className="text-xs text-zinc-400 mt-1">
-              Organization-level agent analytics, team member management, security policies, and RBAC governance.
+            <p className="text-sm text-[#696572] mt-1">
+              Manage your team and agent activity.
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             <Link href="/client/team">
               <Button variant="primary" size="sm" icon={<Users className="w-4 h-4" />}>
-                Manage Team Members
+                Team Members
               </Button>
             </Link>
             <Link href="/client/analytics">
               <Button variant="secondary" size="sm" icon={<BarChart3 className="w-4 h-4" />}>
-                View Analytics
+                Analytics
               </Button>
             </Link>
           </div>
         </div>
 
-        {/* METRICS CARDS */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="p-4 space-y-2">
-            <div className="flex items-center justify-between text-xs text-zinc-400">
-              <span>Total Team Members</span>
-              <Users className="w-4 h-4 text-red-500" />
+        {/* METRICS GRID */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card className="p-6 space-y-2">
+            <div className="text-[10px] font-mono uppercase tracking-widest text-[#96919F] font-semibold">
+              Members
             </div>
-            <div className="text-3xl font-extrabold text-white">{DEMO_ANALYTICS.teamMembersCount}</div>
-            <div className="text-[11px] text-emerald-400 font-medium">8 Active / 1 Invited</div>
+            <div className="text-3xl font-bold text-[#17151C]">{DEMO_ANALYTICS.teamMembersCount}</div>
           </Card>
 
-          <Card className="p-4 space-y-2">
-            <div className="flex items-center justify-between text-xs text-zinc-400">
-              <span>Organization Agent Runs</span>
-              <Activity className="w-4 h-4 text-purple-400" />
+          <Card className="p-6 space-y-2">
+            <div className="text-[10px] font-mono uppercase tracking-widest text-[#96919F] font-semibold">
+              Agent runs
             </div>
-            <div className="text-3xl font-extrabold text-white">{DEMO_ANALYTICS.totalTasks}</div>
-            <div className="text-[11px] text-emerald-400 font-medium">95.9% Success Rate</div>
+            <div className="text-3xl font-bold text-[#17151C]">{DEMO_ANALYTICS.totalTasks}</div>
           </Card>
 
-          <Card className="p-4 space-y-2">
-            <div className="flex items-center justify-between text-xs text-zinc-400">
-              <span>Total Tool Invocations</span>
-              <Zap className="w-4 h-4 text-amber-400" />
+          <Card className="p-6 space-y-2">
+            <div className="text-[10px] font-mono uppercase tracking-widest text-[#96919F] font-semibold">
+              Completed
             </div>
-            <div className="text-3xl font-extrabold text-purple-400">{DEMO_ANALYTICS.totalToolCalls}</div>
-            <div className="text-[11px] text-zinc-400">Calendar, Gmail, Maps, Travel</div>
+            <div className="text-3xl font-bold text-emerald-600">{DEMO_ANALYTICS.completedTasks}</div>
           </Card>
 
-          <Card className="p-4 space-y-2">
-            <div className="flex items-center justify-between text-xs text-zinc-400">
-              <span>Organization API Tokens</span>
-              <Cpu className="w-4 h-4 text-blue-400" />
+          <Card className="p-6 space-y-2">
+            <div className="text-[10px] font-mono uppercase tracking-widest text-[#96919F] font-semibold">
+              Failed
             </div>
-            <div className="text-3xl font-extrabold text-red-400">482,900</div>
-            <div className="text-[11px] text-zinc-400">Gemini 1.5 Pro Engine</div>
+            <div className="text-3xl font-bold text-rose-600">{DEMO_ANALYTICS.failedTasks}</div>
           </Card>
         </div>
 
         {/* QUICK ACCESS MODULES */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card hoverEffect className="p-6 space-y-3">
-            <Users className="w-8 h-8 text-red-500" />
-            <h3 className="text-lg font-bold text-white">Team Management</h3>
-            <p className="text-xs text-zinc-400">
-              Invite organization members, assign roles (`user` vs `client_admin`), and audit last active session timestamps.
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+          <Card className="p-6 space-y-4 hover:border-[#A78BFA] transition-all">
+            <Users className="w-5 h-5 text-[#A78BFA]" />
+            <h3 className="text-base font-bold text-[#17151C]">Team</h3>
+            <p className="text-xs text-[#696572]">
+              Invite members and manage organization access roles.
             </p>
             <Link href="/client/team" className="block pt-2">
               <Button variant="outline" size="sm" className="w-full">
-                Go to Team Management →
+                Team Roster →
               </Button>
             </Link>
           </Card>
 
-          <Card hoverEffect className="p-6 space-y-3">
-            <BarChart3 className="w-8 h-8 text-purple-500" />
-            <h3 className="text-lg font-bold text-white">Organization Analytics</h3>
-            <p className="text-xs text-zinc-400">
-              Examine daily task volume graphs, tool invocation distributions, success/failure rates, and token budgets.
+          <Card className="p-6 space-y-4 hover:border-[#A78BFA] transition-all">
+            <BarChart3 className="w-5 h-5 text-[#A78BFA]" />
+            <h3 className="text-base font-bold text-[#17151C]">Analytics</h3>
+            <p className="text-xs text-[#696572]">
+              Track agent activity and performance metrics.
             </p>
             <Link href="/client/analytics" className="block pt-2">
               <Button variant="outline" size="sm" className="w-full">
-                Go to Analytics →
+                View Analytics →
               </Button>
             </Link>
           </Card>
 
-          <Card hoverEffect className="p-6 space-y-3">
-            <Settings className="w-8 h-8 text-amber-500" />
-            <h3 className="text-lg font-bold text-white">Organization Settings</h3>
-            <p className="text-xs text-zinc-400">
-              Configure Human-in-the-Loop strictness, company branding, database RLS rules, and enterprise plan billing.
+          <Card className="p-6 space-y-4 hover:border-[#A78BFA] transition-all">
+            <Settings className="w-5 h-5 text-[#A78BFA]" />
+            <h3 className="text-base font-bold text-[#17151C]">Settings</h3>
+            <p className="text-xs text-[#696572]">
+              Configure organization security and preferences.
             </p>
             <Link href="/client/settings" className="block pt-2">
               <Button variant="outline" size="sm" className="w-full">
-                Go to Settings →
+                Org Settings →
               </Button>
             </Link>
           </Card>
@@ -128,3 +119,4 @@ export default function ClientAdminDashboardPage() {
     </DashboardLayout>
   );
 }
+

@@ -22,14 +22,14 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
   }
 
   return (
-    <div className="flex min-h-screen bg-black text-zinc-100 font-sans antialiased">
+    <div className="flex min-h-screen bg-[#F5F4F0] dark:bg-[#121210] text-[#111111] dark:text-[#EAE8E3] font-sans antialiased">
       {/* Sidebar Navigation */}
       <Sidebar />
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
         <TopBar />
-        <main className="flex-1 p-6 md:p-8 overflow-y-auto">
+        <main className="flex-1 p-6 md:p-10 max-w-7xl w-full mx-auto overflow-y-auto">
           {children}
         </main>
       </div>
@@ -39,4 +39,5 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
     </div>
   );
 };
+
 

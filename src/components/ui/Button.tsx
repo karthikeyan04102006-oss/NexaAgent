@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'google';
+  size?: 'sm' | 'md' | 'lg' | 'icon';
   isLoading?: boolean;
   icon?: React.ReactNode;
 }
@@ -17,20 +17,45 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
-  const baseStyles = "inline-flex items-center justify-center font-medium transition-all duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500/50 disabled:opacity-50 disabled:cursor-not-allowed";
+  const baseStyles = "inline-flex items-center justify-center font-semibold tracking-tight rounded-[10px] transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#A78BFA]/50 focus:ring-offset-1 dark:focus:ring-offset-[#08080A] disabled:bg-[#E7E4EA] dark:disabled:bg-[#29272D] disabled:text-[#A09AA8] dark:disabled:text-[#77727F] disabled:border-transparent disabled:cursor-not-allowed disabled:shadow-none disabled:transform-none shrink-0 cursor-pointer select-none";
 
   const variants = {
-    primary: "bg-red-gradient text-white shadow-red-glow hover:shadow-red-glow-lg border border-red-500/40 hover:border-red-400 active:scale-[0.98]",
-    secondary: "bg-zinc-200 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-800 active:scale-[0.98]",
-    outline: "border border-zinc-300 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-red-600/60 hover:text-red-600 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900/50",
-    ghost: "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/60 dark:hover:bg-zinc-900/60",
-    danger: "bg-rose-950 text-rose-200 border border-rose-800/80 hover:bg-rose-900 active:scale-[0.98]"
+    primary: [
+      "bg-[#A78BFA] text-[#17151C] border border-transparent shadow-[0_4px_16px_rgba(167,139,250,0.18)] hover:bg-[#8B73E8] hover:-translate-y-[1px] active:bg-[#7C3AED]",
+      "dark:bg-[#A78BFA] dark:text-[#100D16] dark:shadow-[0_4px_20px_rgba(167,139,250,0.20)] dark:hover:bg-[#C4B5FD] dark:active:bg-[#DDD6FE]"
+    ].join(" "),
+
+    secondary: [
+      "bg-transparent text-[#6D5BA6] border border-[#D8D0E5] hover:bg-[#F0EBF8] hover:border-[#C4B5FD] active:scale-[0.99]",
+      "dark:text-[#C4B5FD] dark:border-[#37313F] dark:hover:bg-[#1C1722] dark:hover:border-[#A78BFA]"
+    ].join(" "),
+
+    outline: [
+      "bg-transparent text-[#6D5BA6] border border-[#CFC7DA] hover:border-[#A78BFA] hover:text-[#A78BFA] active:scale-[0.99]",
+      "dark:text-[#C4B5FD] dark:border-[#4A4254] dark:hover:border-[#A78BFA] dark:hover:text-[#A78BFA]"
+    ].join(" "),
+
+    ghost: [
+      "bg-transparent text-[#696572] hover:bg-[#F0EDF5] hover:text-[#6D5BA6]",
+      "dark:text-[#A7A3B2] dark:hover:bg-[#1A1720] dark:hover:text-[#C4B5FD]"
+    ].join(" "),
+
+    danger: [
+      "bg-[#FFF1F2] text-[#B42318] border border-[#FECACA] hover:bg-[#FEE2E2] active:scale-[0.99]",
+      "dark:bg-[#2A1518] dark:text-[#FDA4AF] dark:border-[#542027] dark:hover:bg-[#38191D]"
+    ].join(" "),
+
+    google: [
+      "bg-[#FFFFFF] text-[#17151C] border border-[#DAD7DF] hover:bg-[#F7F7F8] active:scale-[0.99]",
+      "dark:bg-[#151519] dark:text-[#F5F3FF] dark:border-[#35323A] dark:hover:bg-[#1E1E23]"
+    ].join(" ")
   };
 
   const sizes = {
-    sm: "px-3 py-1.5 text-xs gap-1.5",
-    md: "px-4 py-2.5 text-sm gap-2",
-    lg: "px-6 py-3.5 text-base gap-2.5"
+    sm: "h-[36px] px-[14px] text-[13px] gap-1.5",
+    md: "h-[42px] px-[18px] text-[14px] gap-2",
+    lg: "h-[48px] px-[22px] text-[15px] gap-2.5",
+    icon: "w-[40px] h-[40px] p-0 flex items-center justify-center text-sm"
   };
 
   return (
@@ -40,14 +65,15 @@ export const Button: React.FC<ButtonProps> = ({
       {...props}
     >
       {isLoading ? (
-        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-current" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+        <svg className="animate-spin h-4 w-4 text-current shrink-0" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3"></circle>
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
       ) : icon ? (
-        <span className="shrink-0">{icon}</span>
+        <span className="shrink-0 flex items-center justify-center">{icon}</span>
       ) : null}
       {children}
     </button>
   );
 };
+
